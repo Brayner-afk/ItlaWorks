@@ -1,0 +1,34 @@
+﻿@model TechFixManager.Models.Reparacion
+
+@{
+    ViewData["Title"] = "Detalle Reparación";
+}
+
+<h2>Detalle de la Reparación</h2>
+
+<div class="card shadow">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Fecha</dt>
+            <dd class="col-sm-9">@Model.Fecha.ToShortDateString()</dd>
+
+            <dt class="col-sm-3">Cliente</dt>
+            <dd class="col-sm-9">@Model.Equipo?.Cliente?.Nombre</dd>
+
+            <dt class="col-sm-3">Equipo</dt>
+            <dd class="col-sm-9">@Model.Equipo?.Marca @Model.Equipo?.Modelo</dd>
+
+            <dt class="col-sm-3">Técnico</dt>
+            <dd class="col-sm-9">@Model.Tecnico?.Nombre</dd>
+
+            <dt class="col-sm-3">Descripción</dt>
+            <dd class="col-sm-9">@Model.Descripcion</dd>
+
+            <dt class="col-sm-3">Costo</dt>
+            <dd class="col-sm-9 fw-bold text-success">RD$ @Model.Costo.ToString("N2")</dd>
+        </dl>
+
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+    </div>
+</div>

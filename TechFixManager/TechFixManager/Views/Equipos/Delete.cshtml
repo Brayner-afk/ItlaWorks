@@ -1,0 +1,33 @@
+﻿@model TechFixManager.Models.Equipo
+
+@{
+    ViewData["Title"] = "Eliminar Equipo";
+}
+
+<h1 class="text-danger">Eliminar Equipo</h1>
+
+<hr />
+
+<div class="alert alert-danger">
+    ⚠️ ¿Estás seguro que deseas eliminar este equipo?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Marca</dt>
+    <dd class="col-sm-9">@Model.Marca</dd>
+
+    <dt class="col-sm-3">Modelo</dt>
+    <dd class="col-sm-9">@Model.Modelo</dd>
+
+    <dt class="col-sm-3">Serie</dt>
+    <dd class="col-sm-9">@Model.Serie</dd>
+
+    <dt class="col-sm-3">Cliente</dt>
+    <dd class="col-sm-9">@Model.Cliente.Nombre</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">🗑 Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">↩ Cancelar</a>
+</form>

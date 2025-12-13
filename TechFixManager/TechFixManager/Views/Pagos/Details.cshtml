@@ -1,0 +1,25 @@
+﻿@model TechFixManager.Models.Pago
+
+<h2>Detalle del Pago</h2>
+
+<div class="card shadow">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-4">Fecha</dt>
+            <dd class="col-sm-8">@Model.FechaPago.ToShortDateString()</dd>
+
+            <dt class="col-sm-4">Concepto</dt>
+            <dd class="col-sm-8">@Model.Concepto</dd>
+
+            <dt class="col-sm-4">Cantidad</dt>
+            <dd class="col-sm-8">@Model.Cantidad</dd>
+
+            <dt class="col-sm-4">Monto</dt>
+            <dd class="col-sm-8 fw-bold text-success">
+                RD$ @Model.Monto.ToString("N2")
+            </dd>
+        </dl>
+
+        <a asp-action="Index" class="btn btn-secondary">Volver</a>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿@model TechFixManager.Models.Equipo
+@{
+    ViewData["Title"] = "Registrar Equipo";
+}
+
+<h2>Registrar Nuevo Equipo</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Marca" class="form-label"></label>
+        <input asp-for="Marca" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Modelo" class="form-label"></label>
+        <input asp-for="Modelo" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Serie" class="form-label"></label>
+        <input asp-for="Serie" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Cliente</label>
+        <select asp-for="ClienteId" class="form-select" asp-items="@(new SelectList(ViewBag.Clientes, "Id", "Nombre"))">
+            <option value="">-- Seleccione un cliente --</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a class="btn btn-secondary" asp-action="Index">Cancelar</a>
+</form>
