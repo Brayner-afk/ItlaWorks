@@ -1,0 +1,27 @@
+﻿@model TechFixManager.Models.Tecnico
+
+@{
+    ViewData["Title"] = "Eliminar Técnico";
+}
+
+<h1 class="text-danger">Eliminar Técnico</h1>
+
+<hr />
+
+<div class="alert alert-danger">
+    ⚠ ¿Estás seguro que deseas eliminar este técnico?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Nombre</dt>
+    <dd class="col-sm-9">@Model.Nombre</dd>
+
+    <dt class="col-sm-3">Especialidad</dt>
+    <dd class="col-sm-9">@Model.Especialidad</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">🗑 Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">↩ Cancelar</a>
+</form>
