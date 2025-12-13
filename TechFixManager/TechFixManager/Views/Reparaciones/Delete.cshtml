@@ -1,0 +1,14 @@
+﻿@model TechFixManager.Models.Reparacion
+
+<h2>Eliminar Reparación</h2>
+
+<p><strong>Equipo:</strong> @Model.Equipo.Modelo</p>
+<p><strong>Técnico:</strong> @Model.Tecnico.Nombre</p>
+<p><strong>Descripción:</strong> @Model.Descripcion</p>
+<p><strong>Costo:</strong> RD$ @Model.Costo.ToString("N2")</p>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

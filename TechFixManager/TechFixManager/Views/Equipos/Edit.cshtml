@@ -1,0 +1,45 @@
+﻿@model TechFixManager.Models.Reparacion
+
+@{
+    ViewData["Title"] = "Editar Reparación";
+}
+
+<h2>Editar Reparación</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="Fecha" class="form-label"></label>
+            <input asp-for="Fecha" type="date" class="form-control" />
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Equipo</label>
+            <select asp-for="EquipoId" class="form-select" asp-items="ViewBag.EquipoId"></select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Técnico</label>
+            <select asp-for="TecnicoId" class="form-select" asp-items="ViewBag.TecnicoId"></select>
+        </div>
+
+        <div class="col-md-8 mb-3">
+            <label asp-for="Descripcion" class="form-label"></label>
+            <textarea asp-for="Descripcion" class="form-control"></textarea>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Costo</label>
+            <div class="input-group">
+                <span class="input-group-text">RD$</span>
+                <input asp-for="Costo" type="number" class="form-control" />
+                <span class="input-group-text">.00</span>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</form>

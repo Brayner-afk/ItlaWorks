@@ -1,0 +1,26 @@
+﻿@model TechFixManager.Models.Equipo
+
+@{
+    ViewData["Title"] = "Detalles del Equipo";
+}
+
+<h1>Detalles del Equipo</h1>
+
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Marca</dt>
+    <dd class="col-sm-9">@Model.Marca</dd>
+
+    <dt class="col-sm-3">Modelo</dt>
+    <dd class="col-sm-9">@Model.Modelo</dd>
+
+    <dt class="col-sm-3">Serie</dt>
+    <dd class="col-sm-9">@Model.Serie</dd>
+
+    <dt class="col-sm-3">Cliente</dt>
+    <dd class="col-sm-9">@Model.Cliente?.Nombre</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"> Editar</a>
+<a asp-action="Index" class="btn btn-secondary"> Volver</a>

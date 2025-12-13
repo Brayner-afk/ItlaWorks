@@ -1,0 +1,40 @@
+﻿@model TechFixManager.Models.Pago
+
+<h2>Registrar Pago</h2>
+
+<div class="card shadow">
+    <div class="card-body">
+        <form asp-action="Create">
+
+            <div class="mb-3">
+                <label asp-for="FechaPago" class="form-label"></label>
+                <input asp-for="FechaPago" type="date" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Concepto" class="form-label"></label>
+                <input asp-for="Concepto" class="form-control"
+                       placeholder="Ej: Reparación de Laptop / SSD 512GB" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Cantidad" class="form-label"></label>
+                <input asp-for="Cantidad" class="form-control"
+                       placeholder="Ej: 2 unidades o Servicio realizado" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Monto</label>
+                <div class="input-group">
+                    <span class="input-group-text">RD$</span>
+                    <input asp-for="Monto" type="number" class="form-control" />
+                    <span class="input-group-text">.00</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <a asp-action="Index" class="btn btn-secondary">Volver</a>
+
+        </form>
+    </div>
+</div>

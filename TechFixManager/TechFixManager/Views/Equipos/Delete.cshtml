@@ -1,0 +1,25 @@
+﻿@model TechFixManager.Models.Reparacion
+
+@{
+    ViewData["Title"] = "Eliminar Reparación";
+}
+
+<h2>Eliminar Reparación</h2>
+
+<div class="alert alert-danger">
+    ¿Seguro que deseas eliminar esta reparación?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Descripción</dt>
+    <dd class="col-sm-9">@Model.Descripcion</dd>
+
+    <dt class="col-sm-3">Costo</dt>
+    <dd class="col-sm-9">RD$ @Model.Costo.ToString("N2")</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

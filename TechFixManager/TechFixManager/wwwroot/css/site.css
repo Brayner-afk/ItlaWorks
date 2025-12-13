@@ -1,0 +1,30 @@
+/* Navbar con gradiente tecnológico */
+.tech-navbar {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+    .tech-navbar .nav-link,
+    .tech-navbar .navbar-brand {
+        color: #ffffff !important;
+    }
+
+        .tech-navbar .nav-link:hover {
+            color: #00e5ff !important;
+        }
+
+/* Banner debajo del navbar */
+.tech-banner {
+    background-color: #1c1f26;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+.text-center img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-center h2 {
+    color: #203a43;
+    font-weight: 600;
+}
