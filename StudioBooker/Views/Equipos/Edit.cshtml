@@ -1,0 +1,72 @@
+@model StudioBooker.Models.Equipo
+@{ ViewData["Title"] = "Editar Equipo"; }
+
+<h2 class="text-yellow fw-bold mb-4">Editar Equipo: @Model.Nombre</h2>
+
+<div class="card bg-dark text-white border-yellow shadow">
+    <div class="card-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Nombre" class="form-label text-yellow fw-bold">Nombre del Equipo</label>
+                    <input asp-for="Nombre" class="form-control bg-dark text-white border-secondary" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Categoria" class="form-label text-yellow fw-bold">Categoría</label>
+                    <select asp-for="Categoria" class="form-select bg-dark text-white border-secondary">
+                        <option value="Audio">Audio</option>
+                        <option value="Video">Video</option>
+                        <option value="Iluminación">Iluminación</option>
+                        <option value="Mobiliario">Mobiliario</option>
+                        <option value="Instrumento">Instrumento</option>
+                    </select>
+                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Marca" class="form-label text-yellow fw-bold">Marca</label>
+                    <input asp-for="Marca" class="form-control bg-dark text-white border-secondary" />
+                    <span asp-validation-for="Marca" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Modelo" class="form-label text-yellow fw-bold">Modelo</label>
+                    <input asp-for="Modelo" class="form-control bg-dark text-white border-secondary" />
+                    <span asp-validation-for="Modelo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Descripcion" class="form-label text-yellow fw-bold">Descripción</label>
+                <textarea asp-for="Descripcion" class="form-control bg-dark text-white border-secondary" rows="3"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label asp-for="Estado" class="form-label text-yellow fw-bold">Estado</label>
+                    <select asp-for="Estado" class="form-select bg-dark text-white border-secondary">
+                        <option value="Disponible">Disponible</option>
+                        <option value="En Uso">En Uso</option>
+                        <option value="Mantenimiento">Mantenimiento</option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-yellow fw-bold px-4">Guardar Cambios</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

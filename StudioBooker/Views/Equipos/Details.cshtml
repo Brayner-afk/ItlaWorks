@@ -1,0 +1,32 @@
+@model StudioBooker.Models.Equipo
+@{ ViewData["Title"] = "Detalles del Equipo"; }
+
+<h2 class="text-yellow fw-bold mb-4">Detalles: @Model.Nombre</h2>
+
+<div class="card bg-dark text-white border-yellow shadow">
+    <div class="card-body">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <h5 class="text-yellow border-bottom-yellow pb-2">Especificaciones</h5>
+                <ul class="list-unstyled mt-3">
+                    <li class="mb-2"><strong>Categoría:</strong> <span class="badge bg-yellow text-dark">@Model.Categoria</span></li>
+                    <li class="mb-2"><strong>Marca:</strong> @Model.Marca</li>
+                    <li class="mb-2"><strong>Modelo:</strong> @Model.Modelo</li>
+                    <li class="mb-2">
+                        <strong>Estado:</strong> 
+                        <span class="badge @(Model.Estado == "Disponible" ? "bg-success" : "bg-danger")">@Model.Estado</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h5 class="text-yellow border-bottom-yellow pb-2">Descripción</h5>
+                <p class="mt-3">@(Model.Descripcion ?? "Sin descripción detallada.")</p>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-yellow fw-bold px-4">Editar</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Volver al Catálogo</a>
+        </div>
+    </div>
+</div>

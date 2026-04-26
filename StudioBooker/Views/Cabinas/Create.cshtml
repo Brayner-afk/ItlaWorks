@@ -1,0 +1,62 @@
+@model StudioBooker.Models.Cabina
+@{ ViewData["Title"] = "Nueva Cabina"; }
+
+<h2 class="text-yellow fw-bold mb-4">Registrar Nueva Cabina</h2>
+
+<div class="card bg-dark text-white border-yellow shadow">
+    <div class="card-body">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Nombre" class="form-label text-yellow fw-bold">Nombre de la Cabina</label>
+                    <input asp-for="Nombre" class="form-control bg-dark text-white border-secondary" placeholder="Ej: Cabina C - Podcast" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Tipo" class="form-label text-yellow fw-bold">Tipo / Propósito</label>
+                    <input asp-for="Tipo" class="form-control bg-dark text-white border-secondary" placeholder="Ej: Audio, Video, Mix" />
+                    <span asp-validation-for="Tipo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Capacidad" class="form-label text-yellow fw-bold">Capacidad (Personas)</label>
+                    <input asp-for="Capacidad" type="number" class="form-control bg-dark text-white border-secondary" />
+                    <span asp-validation-for="Capacidad" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Estado" class="form-label text-yellow fw-bold">Estado Inicial</label>
+                    <select asp-for="Estado" class="form-select bg-dark text-white border-secondary">
+                        <option value="Disponible">Disponible</option>
+                        <option value="Mantenimiento">Mantenimiento</option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Descripcion" class="form-label text-yellow fw-bold">Descripción General</label>
+                <textarea asp-for="Descripcion" class="form-control bg-dark text-white border-secondary" rows="3"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Cualidades" class="form-label text-yellow fw-bold">Cualidades y Equipamiento</label>
+                <textarea asp-for="Cualidades" class="form-control bg-dark text-white border-secondary" rows="3" placeholder="Ej: Insonorización, Luces RGB, 3 Micrófonos..."></textarea>
+                <span asp-validation-for="Cualidades" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-yellow fw-bold px-4">Guardar Cabina</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

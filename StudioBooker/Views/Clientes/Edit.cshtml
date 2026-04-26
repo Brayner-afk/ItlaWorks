@@ -1,0 +1,41 @@
+@model StudioBooker.Models.Cliente
+@{ ViewData["Title"] = "Editar Cliente"; }
+
+<h2 class="text-yellow fw-bold mb-4">Editar Cliente: @Model.Nombre</h2>
+
+<div class="card bg-dark text-white border-yellow shadow">
+    <div class="card-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="mb-3">
+                <label asp-for="Nombre" class="form-label text-yellow fw-bold">Nombre Completo</label>
+                <input asp-for="Nombre" class="form-control bg-dark text-white border-secondary" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Email" class="form-label text-yellow fw-bold">Correo Electrónico</label>
+                    <input asp-for="Email" type="email" class="form-control bg-dark text-white border-secondary" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Telefono" class="form-label text-yellow fw-bold">Teléfono de Contacto</label>
+                    <input asp-for="Telefono" class="form-control bg-dark text-white border-secondary" />
+                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-yellow fw-bold px-4">Actualizar Datos</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

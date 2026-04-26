@@ -1,0 +1,60 @@
+@model StudioBooker.Models.Cliente
+@{ ViewData["Title"] = "Perfil del Cliente"; }
+
+<div class="mb-4">
+    <h2 class="text-yellow fw-bold">Perfil de @Model.Nombre</h2>
+    <p class="text-muted">Gestión de datos y actividad del cliente.</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card bg-dark text-white border-yellow shadow">
+            <div class="card-body">
+                <h5 class="text-yellow border-bottom-yellow pb-2 mb-3">Información de Contacto</h5>
+                <p><strong>Email:</strong><br/> @Model.Email</p>
+                <p><strong>Teléfono:</strong><br/> @(Model.Telefono ?? "No registrado")</p>
+                <div class="mt-4">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-yellow w-100 mb-2">Editar Datos</a>
+                    <a asp-action="Index" class="btn btn-outline-secondary w-100">Volver a la Lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card bg-dark text-white border-0 shadow">
+            <div class="card-header bg-dark border-bottom-yellow">
+                <h5 class="text-yellow mb-0 py-2">Historial de Reservas</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-dark table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Cabina</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.HistorialReservas.Any()) {
+                            @foreach (var reserva in Model.HistorialReservas.OrderByDescending(r => r.FechaInicio)) {
+                                <tr>
+                                    <td>@reserva.Cabina?.Nombre</td>
+                                    <td>@reserva.FechaInicio.ToString("d MMM yyyy")</td>
+                                    <td>
+                                        <span class="badge @(reserva.Estado == "Confirmada" ? "bg-success" : (reserva.Estado == "Pendiente" ? "bg-warning text-dark" : "bg-danger"))">
+                                            @reserva.Estado
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        } else {
+                            <tr>
+                                <td colspan="3" class="text-center py-4 text-muted">Este cliente aún no tiene reservas.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

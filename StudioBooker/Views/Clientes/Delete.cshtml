@@ -1,0 +1,28 @@
+@model StudioBooker.Models.Cliente
+@{ ViewData["Title"] = "Eliminar Cliente"; }
+
+<h2 class="text-danger fw-bold mb-4">¿Eliminar Cliente?</h2>
+
+<div class="alert alert-danger bg-dark text-danger border-danger shadow-sm">
+    <i class="bi bi-exclamation-octagon-fill"></i> ¡Atención! Si elimina este cliente, también se borrarán todas sus reservas asociadas.
+</div>
+
+<div class="card bg-dark text-white border-danger shadow">
+    <div class="card-body">
+        <h5 class="text-yellow border-bottom-yellow pb-2 mb-3">Información del Cliente: @Model.Nombre</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Email:</strong> @Model.Email</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Teléfono:</strong> @(Model.Telefono ?? "No registrado")</p>
+            </div>
+        </div>
+
+        <form asp-action="Delete" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger fw-bold px-4">Confirmar Eliminación</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>

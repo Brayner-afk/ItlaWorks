@@ -1,0 +1,35 @@
+@model IEnumerable<StudioBooker.Models.Equipo>
+@{ ViewData["Title"] = "Catálogo de Equipamiento"; }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-yellow fw-bold">Nuestro Equipamiento</h2>
+    <a asp-action="Create" class="btn btn-yellow fw-bold"><i class="bi bi-plus-circle"></i> Nuevo Equipo</a>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var item in Model) {
+        <div class="col">
+            <div class="card bg-dark border-secondary h-100 shadow-sm equipo-card">
+                <div class="card-header bg-dark border-bottom-yellow d-flex justify-content-between align-items-center">
+                    <span class="badge bg-yellow text-dark fw-bold">@item.Categoria</span>
+                    <span class="badge @(item.Estado == "Disponible" ? "bg-success" : "bg-danger")">@item.Estado</span>
+                </div>
+                <div class="card-body text-white">
+                    <h5 class="card-title text-yellow fw-bold mb-1">@item.Nombre</h5>
+                    <p class="text-muted small mb-3">@item.Marca @item.Modelo</p>
+                    <p class="card-text">@item.Descripcion</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 d-flex justify-content-end gap-2 pb-3">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-yellow"><i class="bi bi-pencil"></i></a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info"><i class="bi bi-info-circle"></i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .equipo-card { transition: transform 0.2s; }
+    .equipo-card:hover { transform: translateY(-5px); border-color: var(--bs-yellow) !important; }
+</style>

@@ -1,0 +1,33 @@
+@model StudioBooker.Models.Reserva
+@{ ViewData["Title"] = "Eliminar Reserva"; }
+
+<h2 class="text-danger fw-bold mb-4">¿Eliminar Reserva?</h2>
+
+<div class="alert alert-warning bg-dark text-warning border-warning shadow-sm">
+    <i class="bi bi-exclamation-triangle-fill"></i> Esta acción no se puede deshacer. Se borrará permanentemente el registro de la reserva.
+</div>
+
+<div class="card bg-dark text-white border-danger shadow">
+    <div class="card-body">
+        <h5 class="text-yellow border-bottom-yellow pb-2 mb-3">Detalles de la Reserva #@Model.Id</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Cliente:</strong> @Model.Cliente?.Nombre</p>
+                <p><strong>Cabina:</strong> @Model.Cabina?.Nombre</p>
+                <p><strong>Estado:</strong> @Model.Estado</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Inicio:</strong> @Model.FechaInicio.ToString("g")</p>
+                <p><strong>Fin:</strong> @Model.FechaFin.ToString("g")</p>
+                <p><strong>Monto Total:</strong> <span class="text-yellow fw-bold">@Model.PrecioTotal.ToString("C", new System.Globalization.CultureInfo("en-US"))</span></p>
+                <p><strong>Motivo:</strong> @(Model.Motivo ?? "Sin motivo especificado")</p>
+            </div>
+        </div>
+
+        <form asp-action="Delete" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger fw-bold px-4">Sí, Eliminar Permanentemente</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+@model StudioBooker.Models.Reserva
+@{ ViewData["Title"] = "Editar Reserva"; }
+
+<h2 class="text-yellow fw-bold mb-4">Editar Reserva #@Model.Id</h2>
+
+<div class="card bg-dark text-white border-yellow shadow">
+    <div class="card-body">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ClienteId" class="form-label text-yellow fw-bold">Cliente</label>
+                    <select asp-for="ClienteId" class="form-select bg-dark text-white border-secondary" asp-items="ViewBag.ClienteId"></select>
+                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CabinaId" class="form-label text-yellow fw-bold">Cabina</label>
+                    <select asp-for="CabinaId" class="form-select bg-dark text-white border-secondary" asp-items="ViewBag.CabinaId"></select>
+                    <span asp-validation-for="CabinaId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label asp-for="FechaInicio" class="form-label text-yellow fw-bold">Inicio</label>
+                    <input asp-for="FechaInicio" id="FechaInicio" class="form-control bg-dark text-white border-secondary" type="datetime-local" />
+                    <span asp-validation-for="FechaInicio" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="FechaFin" class="form-label text-yellow fw-bold">Fin</label>
+                    <input asp-for="FechaFin" id="FechaFin" class="form-control bg-dark text-white border-secondary" type="datetime-local" />
+                    <span asp-validation-for="FechaFin" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Estado" class="form-label text-yellow fw-bold">Estado</label>
+                    <select asp-for="Estado" class="form-select bg-dark text-white border-secondary">
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Confirmada">Confirmada</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div id="priceDisplay" class="alert alert-info bg-dark-subtle border-yellow text-white d-none mb-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-cash-stack text-yellow"></i> Costo Estimado:</span>
+                    <span id="estimatedPrice" class="fs-5 fw-bold text-yellow">$0.00</span>
+                </div>
+                <small class="text-muted">Sesiones menores a 1h: $50 fijo. De 1h en adelante: $80/h.</small>
+            </div>
+
+            <div id="timeError" class="alert alert-danger bg-dark text-danger border-danger d-none mb-3">
+                <i class="bi bi-exclamation-triangle-fill"></i> El horario debe estar entre las 15:00 y las 23:00.
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Motivo" class="form-label text-yellow fw-bold">Motivo</label>
+                <textarea asp-for="Motivo" class="form-control bg-dark text-white border-secondary" rows="3"></textarea>
+                <span asp-validation-for="Motivo" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" id="submitBtn" class="btn btn-yellow fw-bold px-4">Guardar Cambios</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const inicioInput = document.getElementById('FechaInicio');
+        const finInput = document.getElementById('FechaFin');
+        const priceDisplay = document.getElementById('priceDisplay');
+        const estimatedPrice = document.getElementById('estimatedPrice');
+        const timeError = document.getElementById('timeError');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function calculatePrice() {
+            const start = new Date(inicioInput.value);
+            const end = new Date(finInput.value);
+
+            if (inicioInput.value && finInput.value) {
+                const startHour = start.getHours();
+                const endHour = end.getHours();
+                const endMinutes = end.getMinutes();
+
+                const isStartValid = startHour >= 15 && startHour < 23;
+                const isEndValid = (endHour > 15 && endHour < 23) || (endHour === 23 && endMinutes === 0);
+                const isRangeValid = end > start;
+
+                if (!isStartValid || !isEndValid || !isRangeValid) {
+                    timeError.classList.remove('d-none');
+                    priceDisplay.classList.add('d-none');
+                    submitBtn.disabled = true;
+                } else {
+                    timeError.classList.add('d-none');
+                    priceDisplay.classList.remove('d-none');
+                    submitBtn.disabled = false;
+
+                    const diffMs = end - start;
+                    const diffHrs = diffMs / (1000 * 60 * 60);
+                    
+                    let total = 0;
+                    if (diffHrs < 1) {
+                        total = 50; // Sesiones menores a 1h: $50 fijo
+                    } else {
+                        total = diffHrs * 80; // 1h o más: $80 por hora
+                    }
+                    
+                    estimatedPrice.innerText = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total);
+                }
+            }
+        }
+
+        inicioInput.addEventListener('change', calculatePrice);
+        finInput.addEventListener('change', calculatePrice);
+        
+        // Ejecutar al cargar para mostrar el precio inicial
+        window.onload = calculatePrice;
+    </script>
+}
