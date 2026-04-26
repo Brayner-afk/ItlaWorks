@@ -1,0 +1,163 @@
+@page "/products"
+@using ProductWeb.Models
+@using ProductWeb.Services
+@inject ProductService ProductService
+
+<PageTitle>Productos</PageTitle>
+
+<h1>Gestión de Productos</h1>
+
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@if (products == null && errorMessage == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else if (products != null)
+{
+    <div class="mb-3">
+        <button class="btn btn-primary" @onclick="() => PrepareNewProduct()">Nuevo Producto</button>
+        <button class="btn btn-secondary" @onclick="LoadProducts">Refrescar</button>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>@product.Stock</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" @onclick="() => EditProduct(product)">Editar</button>
+                        <button class="btn btn-danger btn-sm" @onclick="() => DeleteProduct(product.Id)">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (showModal)
+{
+    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@(currentProduct.Id == 0 ? "Nuevo" : "Editar") Producto</h5>
+                    <button type="button" class="btn-close" @onclick="() => showModal = false"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input class="form-control" @bind="currentProduct.Name" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Descripción</label>
+                        <input class="form-control" @bind="currentProduct.Description" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio</label>
+                        <input type="number" step="0.01" class="form-control" @bind="currentProduct.Price" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control" @bind="currentProduct.Stock" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="() => showModal = false">Cancelar</button>
+                    <button class="btn btn-primary" @onclick="SaveProduct">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<Product>? products;
+    private Product currentProduct = new();
+    private bool showModal = false;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProducts();
+    }
+
+    private async Task LoadProducts()
+    {
+        try 
+        {
+            errorMessage = null;
+            products = await ProductService.GetProductsAsync();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al conectar con la API: {ex.Message}. Asegúrate de que la API esté corriendo en http://localhost:5117";
+        }
+    }
+
+    private void PrepareNewProduct()
+    {
+        currentProduct = new();
+        showModal = true;
+    }
+
+    private void EditProduct(Product product)
+    {
+        currentProduct = new Product 
+        { 
+            Id = product.Id, 
+            Name = product.Name, 
+            Description = product.Description, 
+            Price = product.Price, 
+            Stock = product.Stock 
+        };
+        showModal = true;
+    }
+
+    private async Task SaveProduct()
+    {
+        try
+        {
+            if (currentProduct.Id == 0)
+                await ProductService.CreateProductAsync(currentProduct);
+            else
+                await ProductService.UpdateProductAsync(currentProduct);
+
+            showModal = false;
+            await LoadProducts();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al guardar: {ex.Message}";
+        }
+    }
+
+    private async Task DeleteProduct(int id)
+    {
+        try
+        {
+            await ProductService.DeleteProductAsync(id);
+            await LoadProducts();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al eliminar: {ex.Message}";
+        }
+    }
+}
